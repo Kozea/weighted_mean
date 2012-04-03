@@ -1,0 +1,36 @@
+{
+   "name": "weighted_mean",
+   "abstract": "A weighted mean aggregate function.",
+   "description": "This library contains a single PostgreSQL extension, an aggregate function called weighted_mean.",
+   "version": "1.0.0",
+   "maintainer": [
+      "Ronan Dunklau <ronan@dunklau.fr>"
+   ],
+   "license": "postgresql",
+   "provides": {
+      "weighted_mean": {
+         "abstract": "A weighted mean aggregate function",
+         "file": "sql/weighted_mean.sql",
+         "docfile": "doc/weighted_mean.md",
+         "version": "1.0.0"
+      }
+   },
+   "resources": {
+       "repository": {
+           "url": "git://github.com/Kozea/weighted_mean.git",
+           "web": "git://github.com/Kozea/weighted_mean/",
+           "type": "git"
+        }
+   },
+   "generated_by": "Ronan Dunklau",
+   "meta-spec": {
+      "version": "1.0.0",
+      "url": "http://pgxn.org/meta/spec.txt"
+   },
+   "tags": [
+      "aggregate function",
+      "weighted mean",
+      "mean",
+      "average"
+   ]
+}
