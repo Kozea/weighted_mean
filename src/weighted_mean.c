@@ -11,6 +11,7 @@ PG_MODULE_MAGIC;
 
 PG_FUNCTION_INFO_V1(_weighted_mean_intermediate);
 PG_FUNCTION_INFO_V1(_weighted_mean_final);
+PG_FUNCTION_INFO_V1(make_zero_from_string);
 
 
 typedef struct WeightedMeanInternalState
@@ -22,15 +23,31 @@ typedef struct WeightedMeanInternalState
 
 
 Datum
+make_zero()
+{
+	return DirectFunctionCall1(int4_numeric, Int32GetDatum(0));
+}
+
+Datum
 _weighted_mean_final(PG_FUNCTION_ARGS)
 {
 	WeightedMeanInternalState *state;
 	MemoryContext oldcontext;
-	Datum		total;
+	Datum		total,
+				zero;
 
 	state = (WeightedMeanInternalState *) PG_GETARG_POINTER(0);
 	oldcontext = MemoryContextSwitchTo(state->mcontext);
-	total = DirectFunctionCall2(numeric_div, NumericGetDatum(state->running_sum), NumericGetDatum(state->running_amount));
+	zero = make_zero();
+	if (DirectFunctionCall2(numeric_eq, zero, NumericGetDatum(state->running_amount)))
+	{
+		total = zero;
+	}
+	else
+	{
+		total = DirectFunctionCall2(numeric_div, NumericGetDatum(state->running_sum),
+									NumericGetDatum(state->running_amount));
+	}
 	pfree(state);
 	MemoryContextSwitchTo(oldcontext);
 	PG_RETURN_NUMERIC(total);
@@ -62,8 +79,8 @@ _weighted_mean_intermediate(PG_FUNCTION_ARGS)
 		oldcontext = MemoryContextSwitchTo(internalcontext);
 		state = (WeightedMeanInternalState *) palloc(sizeof(WeightedMeanInternalState));
 		state->mcontext = internalcontext;
-		state->running_sum = DatumGetNumeric(DirectFunctionCall1(numeric_in, CStringGetDatum("0")));
-		state->running_amount = DatumGetNumeric(DirectFunctionCall1(numeric_in, CStringGetDatum("0")));
+		state->running_sum = make_zero();
+		state->running_amount = make_zero();
 	}
 	else
 	{

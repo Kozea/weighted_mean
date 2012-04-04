@@ -10,3 +10,10 @@ select weighted_mean(a,b) from test;
  50.5000000000000000
 (1 row)
 
+update test set b = 0;
+select weighted_mean(a,b) from test;
+ weighted_mean 
+---------------
+             0
+(1 row)
+

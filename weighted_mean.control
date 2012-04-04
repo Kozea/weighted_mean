@@ -1,5 +1,5 @@
 # weighted_mean extension
 comment = 'A weighted mean aggregate function extension'
-default_version = '1.0.0'
+default_version = '1.0.1'
 module_pathname = '$libdir/weighted_mean'
 relocatable = true

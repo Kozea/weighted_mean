@@ -2,7 +2,7 @@
    "name": "weighted_mean",
    "abstract": "A weighted mean aggregate function.",
    "description": "This library contains a single PostgreSQL extension, an aggregate function called weighted_mean.",
-   "version": "1.0.0",
+   "version": "1.0.1",
    "maintainer": [
       "Ronan Dunklau <ronan@dunklau.fr>"
    ],
