@@ -37,6 +37,11 @@ _weighted_mean_final(PG_FUNCTION_ARGS)
 				zero;
 
 	state = (WeightedMeanInternalState *) PG_GETARG_POINTER(0);
+	/* No row has ever been processed. */
+	if (state == NULL)
+	{
+		return make_zero();
+	}
 	oldcontext = MemoryContextSwitchTo(state->mcontext);
 	zero = make_zero();
 	if (DirectFunctionCall2(numeric_eq, zero, NumericGetDatum(state->running_amount)))
