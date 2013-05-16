@@ -84,8 +84,8 @@ _weighted_mean_intermediate(PG_FUNCTION_ARGS)
 		oldcontext = MemoryContextSwitchTo(internalcontext);
 		state = (WeightedMeanInternalState *) palloc(sizeof(WeightedMeanInternalState));
 		state->mcontext = internalcontext;
-		state->running_sum = make_zero();
-		state->running_amount = make_zero();
+		state->running_sum = DatumGetNumeric(make_zero());
+		state->running_amount = DatumGetNumeric(make_zero());
 	}
 	else
 	{
