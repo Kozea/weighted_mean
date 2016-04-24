@@ -22,7 +22,7 @@ typedef struct WeightedMeanInternalState
 }	WeightedMeanInternalState;
 
 
-Datum
+static Datum
 make_zero()
 {
 	return DirectFunctionCall1(int4_numeric, Int32GetDatum(0));
